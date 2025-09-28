@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Target, RotateCcw, LogOut, Trophy, AlertCircle } from 'lucide-react';
+import { Target, RotateCcw, LogOut, Trophy, CircleAlert as AlertCircle } from 'lucide-react';
 
 interface GameBoardProps {
   gameId: string;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Lock, Mail, GamepadIcon } from 'lucide-react';
+import { User, Lock, Mail, Gamepad as GamepadIcon } from 'lucide-react';
 
 interface LoginFormProps {
   onLogin: (username: string, password: string) => Promise<void>;
