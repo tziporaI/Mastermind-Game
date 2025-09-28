@@ -1,54 +1,35 @@
-import React, { useState } from 'react';
-import { LoginForm } from './components/LoginForm';
-import { GameBoard } from './components/GameBoard';
-import { GameAPI } from './services/api';
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
 
 function App() {
-  const [gameId, setGameId] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleLogin = async (username: string, password: string) => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const newGameId = await GameAPI.startGame(username, password);
-      setGameId(newGameId);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'שגיאה בהתחברות');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleLogout = () => {
-    setGameId(null);
-    setError(null);
-  };
-
-  const handleNewGame = () => {
-    setGameId(null);
-    setError(null);
-  };
-
-  if (gameId) {
-    return (
-      <GameBoard
-        gameId={gameId}
-        onLogout={handleLogout}
-        onNewGame={handleNewGame}
-      />
-    );
-  }
+  const [count, setCount] = useState(0)
 
   return (
-    <LoginForm
-      onLogin={handleLogin}
-      loading={loading}
-      error={error}
-    />
-  );
+    <>
+      <div>
+        <a href="https://vite.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/App.tsx</code> and save to test HMR
+        </p>
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
+    </>
+  )
 }
 
-export default App;
+export default App

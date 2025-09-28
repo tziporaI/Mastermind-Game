@@ -1,98 +1,73 @@
-# Bulls and Cows Game - React Frontend
+# React + TypeScript + Vite
 
-A modern React frontend for the Bulls and Cows (בול פגיעה) game, built with TypeScript and Tailwind CSS.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Features
+Currently, two official plugins are available:
 
-- **User Authentication**: Login and registration with validation
-- **Game Interface**: Intuitive game board with real-time feedback
-- **Attempt History**: Track all your guesses and results
-- **Responsive Design**: Works perfectly on desktop and mobile
-- **RTL Support**: Full Hebrew language support
-- **Modern UI**: Clean, professional design with smooth animations
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Game Rules
+## React Compiler
 
-- Guess a 4-digit secret code
-- Each digit must be unique (1-9)
-- **Bull**: Correct digit in correct position
-- **Pgia**: Correct digit in wrong position
-- You have 10 attempts to guess the code
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## API Integration
+## Expanding the ESLint configuration
 
-The frontend connects to your Node.js backend with the following endpoints:
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-### Game Endpoints
-- `POST /api/game/start/:userId/:password` - Start new game
-- `POST /api/game/:gameId` - Make a guess
-- `GET /api/game/:gameId` - Get game status
-- `POST /api/game/:gameId/end` - End game early
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-### Player Endpoints
-- `POST /api/players/add` - Register new player
-- `GET /api/players/:playerId` - Get player data
-- `GET /api/players/leaderboard` - Get top players
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-## Setup Instructions
-
-1. **Install Dependencies**:
-   ```bash
-   npm install
-   ```
-
-2. **Start Development Server**:
-   ```bash
-   npm run dev
-   ```
-
-3. **Make sure your backend is running on port 3001**
-
-4. **Open your browser** and navigate to the development server URL
-
-## Project Structure
-
-```
-src/
-├── components/
-│   ├── LoginForm.tsx      # User authentication
-│   └── GameBoard.tsx      # Main game interface
-├── services/
-│   └── api.ts            # API integration
-├── types/
-│   └── game.ts           # TypeScript interfaces
-├── App.tsx               # Main application component
-└── index.css             # Global styles
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
 
-## Technologies Used
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-- **React 18** with TypeScript
-- **Vite** for fast development
-- **Tailwind CSS** for styling
-- **Axios** for API calls
-- **Lucide React** for icons
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-## Features Implemented
-
-✅ User login and registration
-✅ Game creation and management
-✅ Real-time guess validation
-✅ Attempt history tracking
-✅ Game status updates
-✅ Responsive design
-✅ Hebrew RTL support
-✅ Error handling
-✅ Loading states
-✅ Modern UI/UX
-
-## Backend Compatibility
-
-This frontend is designed to work with your existing Node.js backend that includes:
-- MongoDB with Mongoose
-- Express.js with TypeScript
-- Player and Game models
-- Validation middleware
-- Bulls and Cows game logic
-
-Make sure your backend server is running on `http://localhost:3001` for the API calls to work properly.
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
